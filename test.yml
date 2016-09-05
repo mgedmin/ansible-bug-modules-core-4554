@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - get_url: dest=/tmp/logicaldoc-installer-7.3.zip url=http://netcologne.dl.sourceforge.net/project/logicaldoc/distribution/LogicalDOC%20CE%207.3/logicaldoc-community-installer-7.3.zip
+    - file: dest=/tmp/logicaldoc-installer-7.3 state=directory
+    - unarchive: dest=/tmp/logicaldoc-installer-7.3 src=/tmp/logicaldoc-installer-7.3.zip copy=no
+    - stat: path=/tmp/logicaldoc-installer-7.3/logicaldoc-community-installer-7.3/logicaldoc-installer.jar
+      register: result
+    - assert: that=result.stat.exists
